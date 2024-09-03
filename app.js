@@ -1,14 +1,30 @@
-// Fetch the JSON data and make it available
+// Function to fetch the JSON data
 async function loadFadeData() {
-    const response = await fetch('fade-percentages.json');
-    const data = await response.json();
-    return data;
+    try {
+        const response = await fetch('fade-percentages.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Data loaded successfully:', data); // Debugging log
+        return data;
+    } catch (error) {
+        console.error('Failed to load fade data:', error);
+    }
 }
 
+// Function to calculate the fade percentage
 async function calculateFade() {
     const fadeData = await loadFadeData();
-    const weaponInput = document.getElementById('weapon').value;
-    const seedInput = parseInt(document.getElementById('seed').value, 10);
+    if (!fadeData) {
+        document.getElementById('result').textContent = 'Error loading data. Please try again later.';
+        return;
+    }
+
+    const weaponInput = document.getElementById('weapon').value.trim();
+    const seedInput = parseInt(document.getElementById('seed').value.trim(), 10);
+
+    console.log(`User input - Weapon: ${weaponInput}, Seed: ${seedInput}`); // Debugging log
 
     if (isNaN(seedInput)) {
         document.getElementById('result').textContent = "Invalid seed number. Please enter a valid number.";
@@ -31,3 +47,6 @@ async function calculateFade() {
 
     document.getElementById('result').textContent = `The fade percentage for ${weaponInput} with seed ${seedInput} is ${seedData.percentage}%.`;
 }
+
+// Attach the event listener to the button
+document.querySelector('button').addEventListener('click', calculateFade);
