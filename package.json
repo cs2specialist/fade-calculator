@@ -1,0 +1,57 @@
+{
+  "name": "csgo-fade-percentage-calculator",
+  "version": "1.1.4",
+  "author": "chescos",
+  "license": "MIT",
+  "description": "Calculate the Fade percentage of a CS2 skin using its paint seed.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "unpkg": "dist/umd/index.min.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "keywords": [
+    "cs2",
+    "fade",
+    "cs2 fade"
+  ],
+  "scripts": {
+    "test": "jest --config jest.config.js",
+    "lint": "eslint .",
+    "generate": "ts-node generate.ts",
+    "build": "npm run clean && npm run bundle:cjs && npm run bundle:esm && npm run bundle:umd && npm run bundle:umd:min && ts-node fixup.ts",
+    "bundle:cjs": "tsc --module commonjs --target es6 --outDir dist/cjs",
+    "bundle:esm": "tsc --module es6 --target es6 --outDir dist/esm",
+    "bundle:umd": "rollup dist/esm/index.js --file dist/umd/index.js --format umd --name FadeCalculator",
+    "bundle:umd:min": "terser --ecma 6 --compress --mangle -o dist/umd/index.min.js -- dist/umd/index.js",
+    "clean": "rimraf dist",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chescos/csgo-fade-percentage-calculator.git"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^29.4.1",
+    "rimraf": "^5.0.1",
+    "rollup": "^3.12.0",
+    "terser": "^5.14.2",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  }
+}
