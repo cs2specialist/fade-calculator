@@ -1,2 +1,1 @@
-# fade-calculator
-A calculator to find the fade percentage of any weapon skin in CS:GO and CS2
+This is a script designed to help players find the percentage fade of their skins, just by using the weapon and the seed/pattern.
